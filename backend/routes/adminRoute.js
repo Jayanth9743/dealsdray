@@ -1,10 +1,12 @@
 import express from "express";
-import { adminRegister, adminLogin } from "../controllers/adminController";
+import authAdmin from "../middlewares/auth.js";
+import { adminRegister, adminLogin, getAdmin } from "../controllers/adminController.js";
 
 const adminRoute = express.Router();
 
 adminRoute.post("/register", adminRegister);
 adminRoute.post("/login", adminLogin);
+adminRoute.get("/admin", authAdmin, getAdmin);
 
 export default adminRoute;
 

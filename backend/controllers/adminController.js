@@ -58,4 +58,13 @@ const adminLogin = async(req, res)=>{
     }
 };
 
-export {adminRegister, adminLogin};
+const getAdmin = async(req, res)=>{
+    try{
+        const admin = await adminModel.findById(req.admin._id);
+        res.status(200).json({sucess:true, admin});
+    }catch(err){
+        return res.status(500).json({sucess:false, message: err.message});
+    }
+}
+
+export {adminRegister, adminLogin, getAdmin};

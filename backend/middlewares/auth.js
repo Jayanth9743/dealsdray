@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const authAdmin = (req, res, next) =>{
-    const token  =req.header.authorization?.split(' ')[1];
+    const token  =req.headers.authorization?.split(' ')[1];
     if(!token){
         return res.status(401).json({sucess:false, message: 'Not authorized, login again!'});
     }
@@ -13,3 +13,5 @@ const authAdmin = (req, res, next) =>{
         return res.status(500).json({sucess:false, message: err.message});
     }
 }
+
+export default authAdmin;

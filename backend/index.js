@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import connectDB from "./config/db.js";
-
+import adminRoute from "./routes/adminRoute.js";
+import employeeRoute from "./routes/employeeRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -10,9 +11,8 @@ const PORT = process.env.PORT || 8000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("Hello World");
-});
+app.use("/admin", adminRoute);
+app.use("/employee", employeeRoute);
 
 connectDB();
 
