@@ -13,6 +13,7 @@ app.use(express.json());
 
 app.use("/admin", adminRoute);
 app.use("/employee", employeeRoute);
+app.use("/images", express.static("images"));
 
 connectDB();
 

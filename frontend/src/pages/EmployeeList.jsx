@@ -1,6 +1,9 @@
-import profile from '../assets/profile.jpg'
+import { useContext } from 'react';
+// import profile from '../assets/profile.jpg'
+import { MainContext } from '../context/MainContext';
 
 const EmployeeList = () => {
+    const {employeeData, url} = useContext(MainContext);
   return (
     <div className="flex flex-col items-center justify-center w-full gap-6 mt-32">
         <div className="flex items-center justify-between w-[80%]">
@@ -25,23 +28,25 @@ const EmployeeList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="border-b border-gray-300 ">
-                        <td className="p-2 border border-gray-300">John Doe</td>
-                        <td className="p-2 border border-gray-300"><img src={profile} className='object-contain w-12 h-12' alt="" /></td>
-                        <td className="p-2 border border-gray-300">John Doe</td>
-                        <td className="p-2 border border-gray-300">John Doe</td>
-                        <td className="p-2 border border-gray-300">John Doe</td>
-                        <td className="p-2 border border-gray-300">John Doe</td>
-                        <td className="p-2 border border-gray-300">John Doe</td>
-                        <td className="p-2 border border-gray-300">John Doe</td>
-                        <td className="p-2 border border-gray-300">John Doe</td>
-                        <td className="p-2 border border-gray-300 ">
-                            <div className="flex items-center justify-around">
-                                <button className='ml-1 text-blue-500'>edit</button>
-                                <button className='mr-1 text-red-500'>delete</button>
-                            </div>
-                        </td>
-                    </tr>
+                    {employeeData.map(employee=>(
+                        <tr key={employee._id} className="border-b border-gray-300 ">
+                            <td className="p-2 border border-gray-300">{employee._id}</td>
+                            <td className="p-2 border border-gray-300"><img src={`${url}/images/${employee.image}`} className='object-contain w-12 h-12' alt="" /></td>
+                            <td className="p-2 border border-gray-300">{employee.name}</td>
+                            <td className="p-2 border border-gray-300">{employee.email}</td>
+                            <td className="p-2 border border-gray-300">{employee.mobile}</td>
+                            <td className="p-2 border border-gray-300">{employee.gender}</td>
+                            <td className="p-2 border border-gray-300">{employee.designation}</td>
+                            <td className="p-2 border border-gray-300">{employee.course}</td>
+                            <td className="p-2 border border-gray-300">{employee.createData}</td>
+                            <td className="p-2 border border-gray-300 ">
+                                <div className="flex items-center justify-around">
+                                    <button className='ml-1 text-blue-500'>edit</button>
+                                    <button className='mr-1 text-red-500'>delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>

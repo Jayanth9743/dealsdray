@@ -6,7 +6,7 @@ const adminRoute = express.Router();
 
 adminRoute.post("/register", adminRegister);
 adminRoute.post("/login", adminLogin);
-adminRoute.get("/admin", authAdmin, getAdmin);
+adminRoute.get("/", authAdmin, getAdmin);
 
 export default adminRoute;
 

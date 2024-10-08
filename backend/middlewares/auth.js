@@ -7,7 +7,7 @@ const authAdmin = (req, res, next) =>{
     }
     try{
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.admin = { id: decoded.id };
+        req.admin = { _id: decoded.id };
         next();
     }catch(err){
         return res.status(500).json({sucess:false, message: err.message});

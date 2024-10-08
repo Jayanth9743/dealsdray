@@ -7,22 +7,25 @@ export const MainContext = createContext();
 const MainContextProvider = ({ children }) => {
     const url = 'http://localhost:8000';
     const [employeeData, setEmployeeData] = useState([]);
+    const token = sessionStorage.getItem("token");
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(`${url}/employee`)
-        .then((response)=>{
-            setEmployeeData(response.data);
-            console.log('Data fetched successfully: ', response.data);
-        })
-        .catch((error)=>{
-            console.error('Error fetching data: ', error);
-        })
-    },[]);
+            .then((response) => {
+                console.log('API Response:', response.data);
+                const employees = response.data.data || [];
+                setEmployeeData(employees);
+            })
+            .catch((error) => {
+                console.error('Error fetching data: ', error);
+            });
+    }, []);
 
     const contextValue = {
         employeeData,
         setEmployeeData,
         url,
+        token,
     }
 
     return (
