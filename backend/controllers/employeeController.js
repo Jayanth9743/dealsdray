@@ -33,8 +33,10 @@ const createEmployee = async (req, res) => {
 
 
 const getEmployees = async(req, res)=>{
+  const {employeeId} = req.query;
+  const query = employeeId ? { employeeId } : {};
     try{
-        const employees = await employeeModel.find();
+        const employees = await employeeModel.find(query);
         res.status(200).json({sucess:true, data: employees});
     }catch(err){
         return res.status(500).json({sucess:false, message: err.message});
