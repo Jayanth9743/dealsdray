@@ -10,7 +10,7 @@ const CreateEmployee = () => {
         phoneNo: '',
         designation: '',
         gender: '',
-        course: '', // Change this to a string to hold a single selected course
+        course: '',
         image: null
     });
 
@@ -23,10 +23,9 @@ const CreateEmployee = () => {
                 [name]: files[0],
             });
         } else if (type === 'checkbox') {
-            // If a checkbox is checked, set it as the selected course
             setFormData((prevData) => ({
                 ...prevData,
-                course: value, // Set the course to the selected checkbox's value
+                course: value,
             }));
         } else {
             setFormData({
@@ -45,7 +44,7 @@ const CreateEmployee = () => {
         data.append('phoneNo', formData.phoneNo);
         data.append('designation', formData.designation);
         data.append('gender', formData.gender);
-        data.append('course', formData.course); // Append the selected course
+        data.append('course', formData.course);
 
         if (formData.image) {
             data.append('image', formData.image);
