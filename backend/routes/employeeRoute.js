@@ -15,9 +15,9 @@ const storage = multer.diskStorage({
   
   const upload = multer({ storage: storage });
 
-employeeRoute.post("/create",authAdmin,upload.single("image"), createEmployee);
-employeeRoute.get("/",authAdmin, getEmployees);
-employeeRoute.patch("/update/:id",authAdmin,upload.single("image"), updateEmployee);
-employeeRoute.delete("/delete/:id",authAdmin, deleteEmployee);
+employeeRoute.post("/create",upload.single("image"), createEmployee);
+employeeRoute.get("/",getEmployees);
+employeeRoute.patch("/update/:id",upload.single("image"), updateEmployee);
+employeeRoute.delete("/delete/:id", deleteEmployee);
 
 export default employeeRoute;

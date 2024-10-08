@@ -1,27 +1,36 @@
 import employeeModel from "../models/employeeModel.js";
 
 
-const createEmployee = async(req, res)=>{
-    const imageFile = `${req.file.filename}`;
-    const {name, email, phoneNo, designation, gender, course} = req.body;
-    
-    const newEmployee = new employeeModel({
-        name,
-        email,
-        phoneNo,
-        designation,
-        gender,
-        course,
-        image : imageFile,
-    });
+const createEmployee = async (req, res) => {
+  console.log("Request Body:", req.body);
+  console.log("Uploaded File:", req.file);
 
-    try{
-        const savedEmployee = await newEmployee.save();
-        res.status(201).json({sucess:true, data: savedEmployee});
-    }catch(err){
-        return res.status(500).json({sucess:false, message: err.message});
-    }
+  if (!req.file) {
+      return res.status(400).json({ success: false, message: "Image file is required" });
+  }
+
+  const imageFile = req.file.filename;
+  const { name, email, phoneNo, designation, gender, course } = req.body;
+
+  const newEmployee = new employeeModel({
+      name,
+      email,
+      phoneNo,
+      designation,
+      gender,
+      course,
+      image: imageFile,
+  });
+
+  try {
+      const savedEmployee = await newEmployee.save();
+      res.status(201).json({ success: true, data: savedEmployee });
+  } catch (err) {
+      console.error('Error saving employee:', err);
+      return res.status(500).json({ success: false, message: err.message });
+  }
 };
+
 
 const getEmployees = async(req, res)=>{
     try{

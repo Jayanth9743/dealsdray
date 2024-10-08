@@ -1,8 +1,8 @@
 import Navbar from "./components/Navbar"
-import EmployeeList from "./pages/EmployeeList"
+// import EmployeeList from "./pages/EmployeeList"
 // import Login from "./pages/Login"
 
-// import CreateEmployee from "./pages/CreateEmployee"
+import CreateEmployee from "./pages/CreateEmployee"
 
 function App() {
   
@@ -11,8 +11,8 @@ function App() {
     <>
       {/* <Login/> */}
       <Navbar/>
-      <EmployeeList/>
-      {/* <CreateEmployee/> */}
+      {/* <EmployeeList/> */}
+      <CreateEmployee/>
     </>
   )
 }
