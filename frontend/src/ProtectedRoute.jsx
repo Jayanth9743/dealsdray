@@ -1,22 +1,12 @@
-// ProtectedRoute.jsx
-import { useContext } from 'react';
-import { Navigate } from 'react-router-dom';;
-import { MainContext } from './context/MainContext';
-import Loading from './pages/Loading';
+import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
-    const { token, loadingAdmin } = useContext(MainContext); // Fetch loading state
-    const isAuthenticated = !!token;
+  const isAuthenticated = !!sessionStorage.getItem('token'); 
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
 
-    if (loadingAdmin) {
-        return <Loading />; // Show loading spinner while fetching
-    }
-
-    if (!isAuthenticated) {
-        return <Navigate to="/login" />;
-    }
-
-    return children;
+  return children;
 };
 
 export default ProtectedRoute;
