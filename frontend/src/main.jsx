@@ -9,6 +9,7 @@ import CreateEmployee from './pages/CreateEmployee.jsx'
 import UpdateEmployee from './pages/UpdateEmployee.jsx'
 import Login from './pages/Login.jsx'
 import ProtectedRoute from './ProtectedRoute.jsx'
+import EmployeeList from './pages/EmployeeList.jsx'
 
 const Layout = () => {
   return (
@@ -38,6 +39,10 @@ const router = createBrowserRouter([{
     {
       path:"/update/:employeeId",
       element: <UpdateEmployee/>
+    },
+    {
+      path:"/employeeList",
+      element: <EmployeeList/>
     }
   ]
 },

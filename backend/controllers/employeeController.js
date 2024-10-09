@@ -44,25 +44,42 @@ const getEmployees = async(req, res)=>{
 };
 
 const updateEmployee = async (req, res) => {
-    const { id } = req.params;
-    const { name, email, phoneNo, designation, gender, course } = req.body;
-  
-    try {
-      const updatedEmployee = await employeeModel.findByIdAndUpdate(
-        id,
-        { name, email, phoneNo, designation, gender, course },
-        { new: true }
-      );
-  
-      if (!updatedEmployee) {
-        return res.status(404).json({ success: false, message: "Employee not found" });
+  const { id } = req.params;
+  const { name, email, phoneNo, designation, gender, course } = req.body;
+  const image = req.file ? req.file.filename : ''; // Check if a file is uploaded
+
+  try {
+      const updateData = {
+          name,
+          email,
+          phoneNo,
+          designation,
+          gender,
+          course,
+          createDate: Date.now()
+      };
+
+      // Conditionally add the image field only if a new file is provided
+      if (image) {
+          updateData.image = image;
       }
-  
+
+      const updatedEmployee = await employeeModel.findByIdAndUpdate(
+          id,
+          updateData,
+          { new: true }
+      );
+
+      if (!updatedEmployee) {
+          return res.status(404).json({ success: false, message: "Employee not found" });
+      }
+
       res.status(200).json({ success: true, data: updatedEmployee });
-    } catch (err) {
+  } catch (err) {
       return res.status(500).json({ success: false, message: err.message });
-    }
-  };
+  }
+};
+
 
   const deleteEmployee =async(req, res)=>{
     const { id } = req.params;

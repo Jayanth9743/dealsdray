@@ -8,6 +8,7 @@ const EmployeeList = () => {
     const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center justify-center w-full gap-6 mt-32">
+        <p className='text-2xl font-bold'>Employee List</p>
         <div className="flex items-center justify-between w-[80%]">
             <input type="text" className="w-[25%] border border-solid border-black p-2 rounded-md" placeholder="search for employees" />
             <button className="w-[20%] text-white p-2 shadow-xl rounded-md bg-green-500">create new employee</button>
