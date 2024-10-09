@@ -9,3 +9,8 @@ body{
 *{
   outline: none;
 }
+
+.active{
+  color: #fff;
+  scale: 1.1;
+}

@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MainContext } from "../context/MainContext";
 import axios from "axios";
 
 const UpdateEmployee = () => {
     const { employeeId } = useParams();
     const { employeeData, url } = useContext(MainContext);
+    const [oldImg, setOldImg] = useState('');
+    const navigate = useNavigate();
     
     
     const [formData, setFormData] = useState({
@@ -34,6 +36,7 @@ const UpdateEmployee = () => {
                 course: employee.course || '', 
                 image: employee.image || null, 
             });
+            setOldImg(employee.image);
         }
     }, [employeeId, employeeData]);
 
@@ -80,6 +83,7 @@ const UpdateEmployee = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
+            navigate('/employeeList')
             console.log('Form updated successfully:', response.data);
         } catch (error) {
             console.error('Error updating the form:', error);
@@ -89,7 +93,8 @@ const UpdateEmployee = () => {
     return (
         <div className="flex items-center justify-center w-full mt-40 mb-4">
             <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center w-[40%] gap-6 rounded-xl bg-secondary">
-                <div className="flex flex-col items-start justify-center w-4/5 gap-2 mt-6">
+            <p className="mt-8 text-2xl font-bold">Update Employee</p>
+                <div className="flex flex-col items-start justify-center w-4/5 gap-2">
                     <label className="text-lg font-semibold" htmlFor="name">Name</label>
                     <input
                         type="text"
@@ -218,10 +223,12 @@ const UpdateEmployee = () => {
 
                 <div className="flex flex-col items-start justify-center w-4/5 gap-6">
 
-                    <div className="flex flex-col items-center justify-center w-full gap-4">
+                    {oldImg == formData.image ? (
+                        <div className="flex flex-col items-center justify-center w-full gap-4">
                         <p className="text-lg font-semibold">Existing image</p>
                         <img src={`${url}/images/${formData.image}`} alt={`${formData.image}`} className="w-[25%] h-[25%] object-contain" />
                     </div>
+                    ):(<></>)}
 
                     <label className="text-lg font-semibold" htmlFor="image">New Image Upload</label>
                     <input

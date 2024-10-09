@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useContext, useState } from "react";
 import { MainContext } from "../context/MainContext";
+import { useNavigate } from "react-router-dom";
 
 const CreateEmployee = () => {
     const { url } = useContext(MainContext);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -57,6 +59,7 @@ const CreateEmployee = () => {
                 },
             });
             console.log('Form submitted successfully:', response.data);
+            navigate('/employeeList');
         } catch (error) {
             console.error('Error submitting the form:', error);
         }
@@ -65,7 +68,8 @@ const CreateEmployee = () => {
     return (
         <div className="flex items-center justify-center w-full mt-40 mb-4 ">
             <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center w-[40%] gap-6 rounded-xl bg-secondary">
-                <div className="flex flex-col items-start justify-center w-4/5 gap-2 mt-8">
+                <p className="mt-8 text-2xl font-bold">Create Employee</p>
+                <div className="flex flex-col items-start justify-center w-4/5 gap-2 ">
                     <p className="text-lg font-semibold ">name</p>
                     <input type="text" className="w-full p-2 rounded-md" 
                         name="name"

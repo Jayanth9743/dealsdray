@@ -2,10 +2,12 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { MdOutlineLogout } from "react-icons/md";
 import { MainContext } from "../context/MainContext";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [admin, setAdmin] = useState(false);
   const { url, token} = useContext(MainContext);
+  const navigate = useNavigate();
   useEffect(()=>{
     const fetchAdmin = async()=>{
       try{
@@ -21,6 +23,12 @@ const Navbar = () => {
     };
     fetchAdmin();
   },[token, url])
+
+  const logout =()=>{
+    sessionStorage.removeItem("token");
+    navigate('/login');
+  }
+
   return (
     <div className="fixed top-0 flex flex-col items-start justify-center w-full h-24 bg-primary">
       <div className="flex items-center justify-between w-full h-[49%]">
@@ -29,9 +37,10 @@ const Navbar = () => {
       </div>
       <hr  className="w-full border-black border-solid"/>
       <div className="flex items-center justify-around w-full text-lg font-semibold h-[49%] bg-primary">
-            <p>Home</p>
-            <p>Employee List</p>
-            <div className="flex items-center justify-center gap-2">
+            <NavLink to='/'>Home</NavLink>
+            <NavLink to="/employeeList">Employee List</NavLink>
+            <div className="flex items-center justify-center gap-2 cursor-pointer " 
+            onClick={logout}>
                 <p>Logout</p> 
                 <MdOutlineLogout/>
             </div>
