@@ -8,12 +8,12 @@ Make sure you have the following software installed on your machine:
 
 ## frontend
 
-cd frontend
-npm install
-npm run dev
+- cd frontend
+- npm install
+- npm run dev
 
 ## backend
 
-cd backend
-npm install
-npm start
+- cd backend
+- npm install
+- npm start
