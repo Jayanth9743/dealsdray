@@ -7,7 +7,7 @@ const UpdateEmployee = () => {
     const { employeeId } = useParams();
     const { employeeData, url } = useContext(MainContext);
     
-    // Initialize formData with empty strings
+    
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -19,14 +19,11 @@ const UpdateEmployee = () => {
     });
 
     useEffect(() => {
-        console.log('Employee ID from URL:', employeeId); // Log the employeeId
-        console.log('Employee Data:', employeeData); // Log the entire employeeData array
     
-        // Find the employee by ID
         const employee = employeeData.find(emp => emp._id === employeeId);
-        console.log('Employee found:', employee); // Check if employee is found
+        console.log('Employee found:', employee); 
     
-        // If employee is found, set the form data
+       
         if (employee) {
             setFormData({
                 name: employee.name || '',
@@ -34,8 +31,8 @@ const UpdateEmployee = () => {
                 phoneNo: employee.phoneNo || '',
                 designation: employee.designation || '',
                 gender: employee.gender || '',
-                course: employee.course || '', // Ensure this is set correctly
-                image: null // Reset image if not updating
+                course: employee.course || '', 
+                image: employee.image || null, 
             });
         }
     }, [employeeId, employeeData]);
@@ -49,8 +46,7 @@ const UpdateEmployee = () => {
                 [name]: files[0],
             });
         } else if (type === 'checkbox') {
-            // Handle checkbox logic for course if needed
-            const updatedCourse = formData.course === value ? '' : value; // Toggle logic
+            const updatedCourse = formData.course === value ? '' : value;
             setFormData((prevData) => ({
                 ...prevData,
                 course: updatedCourse,
@@ -93,7 +89,7 @@ const UpdateEmployee = () => {
     return (
         <div className="flex items-center justify-center w-full mt-40 mb-4">
             <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center w-[40%] gap-6 rounded-xl bg-secondary">
-                <div className="flex flex-col items-start justify-center w-4/5 gap-2">
+                <div className="flex flex-col items-start justify-center w-4/5 gap-2 mt-6">
                     <label className="text-lg font-semibold" htmlFor="name">Name</label>
                     <input
                         type="text"
@@ -133,16 +129,19 @@ const UpdateEmployee = () => {
                 </div>
 
                 <div className="flex flex-col items-start justify-center w-4/5 gap-2">
-                    <label className="text-lg font-semibold" htmlFor="designation">Designation</label>
-                    <input
-                        type="text"
+                    <p className="text-lg font-semibold ">designation</p>
+                    <select
                         name="designation"
-                        id="designation"
                         value={formData.designation}
                         onChange={handleChange}
-                        className="w-full p-2 border rounded"
-                        required
-                    />
+                        className="w-full p-2 border border-black border-solid rounded-md">
+                        <option value="" disabled>
+                            Select Designation
+                        </option>
+                        <option value="Hr">Hr</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Sales">Sales</option>
+                    </select>
                 </div>
 
                 <div className="flex flex-col items-start justify-center w-4/5 gap-2">
@@ -152,8 +151,8 @@ const UpdateEmployee = () => {
                             <input
                                 type="radio"
                                 name="gender"
-                                value="male"
-                                checked={formData.gender === 'male'}
+                                value="Male"
+                                checked={formData.gender === 'Male'}
                                 onChange={handleChange}
                             />
                             Male
@@ -162,11 +161,21 @@ const UpdateEmployee = () => {
                             <input
                                 type="radio"
                                 name="gender"
-                                value="female"
-                                checked={formData.gender === 'female'}
+                                value="Female"
+                                checked={formData.gender === 'Female'}
                                 onChange={handleChange}
                             />
                             Female
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="gender"
+                                value="Others"
+                                checked={formData.gender === 'Others'}
+                                onChange={handleChange}
+                            />
+                            Others
                         </label>
                     </div>
                 </div>
@@ -207,8 +216,14 @@ const UpdateEmployee = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col items-start justify-center w-4/5 gap-2">
-                    <label className="text-lg font-semibold" htmlFor="image">Image Upload</label>
+                <div className="flex flex-col items-start justify-center w-4/5 gap-6">
+
+                    <div className="flex flex-col items-center justify-center w-full gap-4">
+                        <p className="text-lg font-semibold">Existing image</p>
+                        <img src={`${url}/images/${formData.image}`} alt={`${formData.image}`} className="w-[25%] h-[25%] object-contain" />
+                    </div>
+
+                    <label className="text-lg font-semibold" htmlFor="image">New Image Upload</label>
                     <input
                         type="file"
                         name="image"
@@ -218,7 +233,7 @@ const UpdateEmployee = () => {
                     />
                 </div>
 
-                <button type="submit" className="w-4/5 p-2 text-white bg-blue-500 rounded">
+                <button type="submit" className="w-4/5 p-2 mb-6 text-white bg-blue-500 rounded">
                     Update Employee
                 </button>
             </form>
